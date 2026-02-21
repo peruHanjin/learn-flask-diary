@@ -41,6 +41,33 @@
     </nav>
     <!-- ./navbar -->
 
+    <!-- message flashing -->
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+        {% if msgs  %}
+            {% for category, msg in msgs %}
+                {% if category == "error" %}  
+                <!-- error 메시지 -->
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ msg }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% elif category == "success" %}
+                <!-- success 메시지 -->
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ msg }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <!-- ./message flashing -->
+
+
+
+
+
+
     <!-- content -->
     <div class="container">
         {% block description %}
