@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
+from flask_login import LoginManager
 
 # Creat DB Connection
 db = SQLAlchemy()
@@ -24,6 +25,15 @@ def create_app():
     # Create or Import Database
     from .models import User, Note # from .models import *
     create_database(app)
+
+    # flask-login 적용
+    Login_Manager = LoginManager()
+    Login_Manager.login_view = 'auth.sign_in'
+    Login_Manager.init_app(app)
+
+    @Login_Manager.user_loader
+    def load_user(id):
+        return User.query.get(id)  # primary_key
 
     return app
 
